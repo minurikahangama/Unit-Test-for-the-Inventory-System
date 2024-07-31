@@ -104,51 +104,6 @@ class OrderChartTests(TestCase):
         self.assertContains(response, 'Product 1')
         self.assertContains(response, 'Product 2')
 
-# Edit Admin Profile
-
-
-# class AdminProfileEditTests(TestCase):
-#     def setUp(self):
-#         self.admin = User.objects.create_user(
-#             username='admin', password='1234', is_staff=True, email='admin@example.com'
-#         )
-#         self.profile = Profile.objects.create(
-#             staff=self.admin,
-#             address='Initial Address',
-#             phone='Initial Phone',
-#             image='avatar.jpg'
-#         )
-#         self.client.login(username='admin', password='1234')
-
-#     def test_edit_admin_profile(self):
-#         """Test that admin can edit their profile."""
-#         # Prepare data for updating profile
-#         updated_data = {
-#             'username': 'admin_updated',
-#             'email': 'admin_updated@example.com',
-#             'address': '123 Admin St',
-#             'phone': '123-456-7890'
-#         }
-        
-#         # Assuming the URL for profile update is '/profile/update/'
-#         response = self.client.post('/profile/update/', updated_data)
-        
-#         # Check if the response status code is a redirect
-#         self.assertEqual(response.status_code, 302)
-        
-#         # Reload the user and profile from the database
-#         self.admin.refresh_from_db()
-#         self.profile.refresh_from_db()
-        
-#         # Check if the user fields are updated correctly
-#         self.assertEqual(self.admin.username, updated_data['username'])
-#         self.assertEqual(self.admin.email, updated_data['email'])
-        
-#         # Check if the profile fields are updated correctly
-#         self.assertEqual(self.profile.address, updated_data['address'])
-#         self.assertEqual(self.profile.phone, updated_data['phone'])
-
-
 # User Registration and Login
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -190,28 +145,6 @@ class OrderPlacementTests(TestCase):
         response = self.client.post('/dashboard/', {'product': self.product.id, 'order_quantity': 10})
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Order.objects.filter(product=self.product, staff=self.user, order_quantity=10).exists())
-
-# Password Reset via Email
-# from django.core import mail
-
-# class PasswordResetTests(TestCase):
-#     def setUp(self):
-#         self.user = User.objects.create_user(username='user', email='user@example.com', password='1234')
-
-#     def test_password_reset_email(self):
-#         """Test that a password reset email is sent."""
-#         response = self.client.post('/password_reset/', {'email': 'user@example.com'})
-#         self.assertEqual(response.status_code, 302)
-#         self.assertEqual(len(mail.outbox), 1)
-#         self.assertIn('Password reset', mail.outbox[0].subject)
-
-#     def test_password_reset(self):
-#         """Test that password reset works."""
-#         response = self.client.post('/password_reset/', {'email': 'user@example.com'})
-#         token = mail.outbox[0].body.split('token=')[1].split('\n')[0]
-#         response = self.client.post(f'/reset/{token}/', {'new_password1': 'newpass', 'new_password2': 'newpass'})
-#         self.assertEqual(response.status_code, 302)
-#         self.assertTrue(self.client.login(username='user', password='newpass'))
 
 
 
